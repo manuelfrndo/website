@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miel Araucana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js"></script>
+
+    <style>
+        body {
+            background-image: url('https://i.imgur.com/KtGNlUn.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            backdrop-filter: blur(10px);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Media queries para asegurar compatibilidad en móviles y PC */
+        @media (max-width: 768px) {
+            .btn-whatsapp {
+                width: 50px;
+                height: 50px;
+                right: 15px;
+                bottom: 15px;
+            }
+            .btn-whatsapp img {
+                width: 35px;
+            }
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .video-background {
+        position: relative;
+        width: 50%; /* Por defecto, 50% en PC */
+        height: 400px;
+        overflow: hidden;
+        margin: 0 auto;
+        display: block;
+        }
+
+        .video-background iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .video-background {
+                width: 100%; /* Ocupar todo el ancho en móviles */
+                height: auto;
+                aspect-ratio: 16/9; /* Mantener proporción de video */
+            }
+        }
+
+        .sabias-que {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        /* Estilos para el preloader */
+        /* Estilos para el preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(246, 255, 163);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            
+        }
+
+        #preloader img {
+            mix-blend-mode: multiply;
+            width: 200px; /* Tamaño del logo */
+            animation: fadeOut 2s ease-out forwards; /* Dura 3 segundos */
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        /* Ajuste para PC: Logo arriba */
+        @media (min-width: 768px) {
+                    #preloader {
+                        align-items: flex-start; /* Lo mueve hacia arriba */
+                        padding-top: 250px; /* Ajusta la distancia desde arriba */
+                    }
+        }
+        /* Oculta el contenido hasta que el preloader desaparezca */
+        #content {
+            display: none;
+        }
+        
+
+    </style>
+    
+</head>
+    <!-- Preloader -->
+    <div id="preloader">
+        <img mix-blend-mode: multiply src="https://i.imgur.com/uMMNkin.png" alt="Logo">
+    </div>
+    <body class="bg-yellow-50 text-gray-800 font-roboto">
+        <nav class="bg-yellow-300 shadow-md py-4 fixed w-full top-0 z-50">
+            <ul class="flex flex-wrap justify-center space-x-4 sm:space-x-6">
+                <li><a href="#inicio" class="text-yellow-800 font-semibold hover:underline">Inicio</a></li>
+                <li><a href="#exclusividad" class="text-yellow-800 font-semibold hover:underline">Exclusividad</a></li>
+                <li><a href="#tipos" class="text-yellow-800 font-semibold hover:underline">Tipos de Miel</a></li>
+                <li><a href="#precios" class="text-yellow-800 font-semibold hover:underline">Precios</a></li>
+                <li><a href="#compra" class="text-yellow-800 font-semibold hover:underline">Cómo Comprar</a></li>
+            </ul>
+        </nav>>
+        </nav>
+    
+    <!-- Encabezado -->
+    <header id="inicio" class="text-center py-7 bg-yellow-300 shadow-xl flex justify-center items-center space-x-6 mt-9">
+        <img src="https://i.imgur.com/uMMNkin.jpeg" alt="Logo" class="w-19 max-w-[10%] rounded-full">
+        <h1 class="text-4xl font-extrabold text-yellow-800">Miel Araucana</h1>
+    </header>
+    <!--Log in-->>
+    <div class="text-center my-6">
+        <button id="login-btn" onclick="loginWithGoogle()" class="btn bg-green-500 hover:bg-green-700">
+          Iniciar sesión con Google
+        </button>
+        <div id="user-info" class="mt-4"></div>
+      </div>
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyA1TjsUeLz6p8RkhzAFxt_s6hU65VQ_4pw",
+        authDomain: "mielaraucana-d0344.firebaseapp.com",
+        projectId: "mielaraucana-d0344",
+        storageBucket: "mielaraucana-d0344.firebasestorage.app",
+        messagingSenderId: "299401210970",
+        appId: "1:299401210970:web:b968698f3fc079e9a3fc63",
+        measurementId: "G-ZHZQJTNZML"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    </script>
+
+    <!-- Sección de Exclusividad en Copiapó -->
+    <section id="exclusividad" class="text-center py-16 px-6 bg-yellow-100">
+        <h2 class="text-3xl font-semibold text-yellow-800 mb-6">Exclusividad en Copiapó - Chile</h2>
+        <p class="text-xl text-gray-700 max-w-2xl mx-auto">Nuestra <strong>Miel Araucana</strong> es un producto 100% natural originario del sur de Chile, pero con <strong>venta exclusiva en Copiapó</strong>. Garantizamos calidad y frescura en cada entrega.</p>
+        <div class="mt-6">
+            <img src="https://i.imgur.com/dmyZpiP.jpeg" alt="Miel Exclusiva en Copiapó" class="w-80 h-auto mx-auto rounded-lg shadow-lg">
+        </div>
+    </section>
+
+    
+    <!-- Sección de Presentación -->
+    <section class="text-center py-16 px-6">
+        <h2 class="text-3xl font-semibold text-yellow-800 bg-white p-4 rounded-lg shadow-lg inline-block">
+            Miel 100% natural a domicilio al mejor precio!!
+        </h2>
+        <div class="relative w-full max-w-2xl mx-auto mt-6">
+            <div id="carousel" class="flex overflow-hidden rounded-lg shadow-xl">
+                <img src="https://i.imgur.com/dmyZpiP.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500">
+                <img src="https://i.imgur.com/qzGydFw.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
+                <img src="https://i.imgur.com/Xf2Ekfv.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
+                
+            </div>
+            <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-yellow-50 text-black px-3 py-2 rounded-full shadow-lg">&#10094;</button>
+            <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-yellow-50 text-black px-3 py-2 rounded-full shadow-lg">&#10095;</button>
+        </div>
+        
+    </section>
+
+    <!-- Sección de Tipos de Miel -->
+    <section id="tipos" class="text-center py-16 px-6 bg-yellow-50">
+        <h2 class="text-3xl font-semibold text-yellow-800 mb-8">Tipos de Miel</h2>
+        <div class="flex justify-center space-x-12">
+            <!-- Miel Cristalizada -->
+            <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+                <img src="https://i.imgur.com/qzGydFw.jpeg" alt="Miel Cristalizada" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Miel Cristalizada</h3>
+                <p class="text-gray-700">La miel cristalizada es un proceso natural en el que la miel se convierte en sólido o semi-sólido, manteniendo todas sus propiedades.</p>
+            </div>
+            <!-- Miel Sin Cristalizar -->
+            <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+                <img src="https://i.imgur.com/pyri2tw.jpeg" alt="Miel Sin Cristalizar" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Miel Sin Cristalizar</h3>
+                <p class="text-gray-700">La miel sin cristalizar mantiene su consistencia líquida y fluida, ideal para usar en té o como edulcorante natural.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Precios y Formatos -->
+    <section id="precios" class="text-center py-16 px-6 bg-yellow-100">
+        <h2 class="text-3xl font-semibold text-yellow-800 mb-6">Nuestros formatos y precios (CLP)</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div onclick="scrollToCompra()" class="cursor-pointer bg-white p-8 rounded-xl shadow-lg transition-transform transform hover:scale-105">
+                <h3 class="text-2xl font-semibold text-yellow-700">1kg (1u)</h3>
+                <p class="text-xl text-yellow-700 font-bold mt-2">$8.000</p>
+            </div>
+            <div onclick="scrollToCompra()" class="cursor-pointer bg-white p-8 rounded-xl shadow-lg transition-transform transform hover:scale-105">
+                <h3 class="text-2xl font-semibold text-yellow-700">10kg (10u)</h3>
+                <p class="text-xl text-yellow-700 font-bold mt-2">$72.000</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function scrollToCompra() {
+            document.getElementById('compra').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+    <!-- Sección de Video como fondo "¿Sabías qué?" -->
+    <section class="video-background py-16 px-6 bg-yellow-50">
+        <iframe src="https://www.youtube.com/embed/vclSXh9DB6U?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=vclSXh9DB6U" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
+        <div class="sabias-que">
+            <h2 class="text-3xl font-semibold text-yellow-800">¿Sabías qué?</h2>
+            <p class="text-xl text-gray-700 mt-4">La miel nunca caduca, puede durar miles de años sin perder sus propiedades.</p>
+        </div>
+    </section>
+
+    <section id="beneficios" class="text-center py-16 px-6 bg-yellow-50">
+        <h2 class="text-3xl font-semibold text-yellow-800 mb-8">Beneficios de Consumir Miel</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Beneficio 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <img src="https://r.mobirisesite.com/1213834/assets/images/photo-1556201977-1df3c782a58e.jpeg" alt="Energía natural" class="rounded-lg shadow-md max-w-full h-auto mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700">Fuente de Energía</h3>
+                <p class="text-gray-700">Aporta energía rápida y natural gracias a su contenido de fructosa y glucosa.</p>
+            </div>
+            <!-- Beneficio 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <img src="https://r.mobirisesite.com/1213834/assets/images/photo-1551025119-77673c1d37cd.jpeg" alt="Refuerzo inmunológico" class="rounded-lg shadow-md max-w-full h-auto mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700">Refuerzo Inmunológico</h3>
+                <p class="text-gray-700">Rica en antioxidantes y propiedades antibacterianas que fortalecen las defensas.</p>
+            </div>
+            <!-- Beneficio 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <img src="https://r.mobirisesite.com/1213834/assets/images/photo-1614272786149-ed03a5351970.jpeg" alt="Alivio para la tos" class="rounded-lg shadow-md max-w-full h-auto mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700">Alivio para la Tos</h3>
+                <p class="text-gray-700">Suaviza la garganta y alivia la tos de forma natural.</p>
+            </div>
+            <!-- Beneficio 4 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <img src="https://r.mobirisesite.com/1213834/assets/images/photo-1570634433336-be7629414ce1.jpeg" alt="Mejora la digestión" class="rounded-lg shadow-md max-w-full h-auto mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700">Mejora la Digestión</h3>
+                <p class="text-gray-700">Actúa como prebiótico, ayudando a la salud intestinal.</p>
+            </div>
+            <!-- Beneficio 5 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <img src="https://r.mobirisesite.com/1213834/assets/images/photo-1580912458702-6fa698fc553e.jpeg" alt="Cicatrizante natural" class="rounded-lg shadow-md max-w-full h-auto mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700">Cicatrizante Natural</h3>
+                <p class="text-gray-700">Acelera la curación de heridas y quemaduras por su acción antibacteriana.</p>
+            </div>
+            <!-- Beneficio 6 -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <img src="https://r.mobirisesite.com/1213834/assets/images/photo-1441633980922-d18ca151ee64.jpeg" alt="Favorece el sueño" class="rounded-lg shadow-md max-w-full h-auto mb-4">
+                <h3 class="text-2xl font-semibold text-yellow-700">Favorece el Sueño</h3>
+                <p class="text-gray-700">Estimula la producción de melatonina, ayudando al descanso.</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Sección de Compra -->
+    <section id="compra" class="text-center py-16 px-6">
+    <div class="bg-white p-8 rounded-lg shadow-xl inline-block mb-6">
+        <h2 class="text-3xl font-semibold text-yellow-800 mb-6">Cómo Comprar</h2>
+        <p class="text-xl text-gray-700 mb-6">Escríbeme por WhatsApp y coordina tu pedido.</p>
+    </div>
+        <!-- Botones para Empresa o Particular -->
+        <div class="flex justify-center space-x-6">
+            <!-- Botón para Empresa -->
+            <a href="https://wa.me/958608263?text=Hola,%20me%20interesa%20hacer%20un%20pedido%20como%20empresa.%20Quisiera%20más%20información." 
+            target="_blank" 
+            class="inline-block bg-blue-500 text-white py-4 px-8 rounded-lg shadow-xl text-lg font-bold hover:bg-blue-600 transform hover:scale-105 transition duration-300 ease-in-out">
+                Soy Empresa
+            </a>
+            
+            <!-- Botón para Particular -->
+            <a href="https://wa.me/958608263?text=Hola,%20me%20interesa%20hacer%20un%20pedido.%20Quisiera%20más%20información." 
+            target="_blank" 
+            class="inline-block bg-green-500 text-white py-4 px-8 rounded-lg shadow-xl text-lg font-bold hover:bg-green-600 transform hover:scale-105 transition duration-300 ease-in-out">
+                Soy Particular
+            </a>
+        </div>
+    </section>
+    <section id="auth" class="text-center py-16 px-6 bg-yellow-100">
+        <h2 class="text-3xl font-semibold text-yellow-800 mb-6">Iniciar Sesión / Registrarse</h2>
+        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <ul class="flex justify-around mb-6">
+                <li><button id="loginBtn" class="text-yellow-800 font-semibold hover:underline">Iniciar Sesión</button></li>
+                <li><button id="signupBtn" class="text-yellow-800 font-semibold hover:underline">Registrarse</button></li>
+            </ul>
+            
+            <!-- Formulario de Iniciar Sesión -->
+            <form id="loginForm" class="space-y-4">
+                <input type="email" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
+                <input type="password" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
+                <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded">Ingresar</button>
+            </form>
+            
+            <!-- Formulario de Registro (Oculto por defecto) -->
+            <form id="signupForm" class="space-y-4 hidden">
+                <input type="text" placeholder="Nombre Completo" class="w-full p-2 border border-gray-300 rounded">
+                <input type="email" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
+                <input type="password" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
+                <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded">Registrarse</button>
+            </form>
+        </div>
+    </section>
+    
+    <script>
+        document.getElementById("loginBtn").addEventListener("click", function() {
+            document.getElementById("loginForm").classList.remove("hidden");
+            document.getElementById("signupForm").classList.add("hidden");
+        });
+        
+        document.getElementById("signupBtn").addEventListener("click", function() {
+            document.getElementById("signupForm").classList.remove("hidden");
+            document.getElementById("loginForm").classList.add("hidden");
+        });
+    </script>
+
+    <!-- Pie de página -->
+    <footer class="text-center py-6 bg-yellow-300 mt-12 shadow-inner">
+        <p class="text-lg text-gray-700">&copy; 2025 Miel a Domicilio. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Botón de WhatsApp flotante -->
+    </section>
+    <a href="https://wa.me/56958608263?text=Hola.%20Estoy%20interesado!!" class="whatsapp-btn">WhatsApp</a>
+    
+    <script>
+        // Función para el carrusel de imágenes
+        const images = document.querySelectorAll('#carousel img');
+        let currentIndex = 0;
+
+        document.getElementById('next').addEventListener('click', () => {
+            images[currentIndex].classList.add('hidden');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.remove('hidden');
+        });
+
+        document.getElementById('prev').addEventListener('click', () => {
+            images[currentIndex].classList.add('hidden');
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            images[currentIndex].classList.remove('hidden');
+        });
+    </script>
+    <script>
+        // Espera 3 segundos antes de ocultar el preloader y mostrar el contenido
+        setTimeout(function() {
+            document.getElementById("preloader").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        }, 2000);
+    </script>
+    <script>
+        // Configuración de Firebase (usa los datos de tu proyecto)
+        const firebaseConfig = {
+          apiKey: "TU_API_KEY",
+          authDomain: "TU_PROYECTO.firebaseapp.com",
+          projectId: "TU_PROJECT_ID",
+          storageBucket: "TU_PROJECT_ID.appspot.com",
+          messagingSenderId: "TU_SENDER_ID",
+          appId: "TU_APP_ID"
+        };
+      
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+      
+        // Función para iniciar sesión con Google
+        function loginWithGoogle() {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          auth.signInWithPopup(provider)
+            .then((result) => {
+              const user = result.user;
+              document.getElementById("user-info").innerHTML = `
+                <img src="${user.photoURL}" alt="Usuario" class="rounded-full w-12">
+                <p>${user.displayName}</p>
+                <button onclick="logout()" class="btn bg-red-500 hover:bg-red-700">Cerrar Sesión</button>
+              `;
+              document.getElementById("login-btn").style.display = "none";
+            })
+            .catch((error) => console.error(error));
+        }
+      
+        // Función para cerrar sesión
+        function logout() {
+          auth.signOut().then(() => {
+            document.getElementById("user-info").innerHTML = "";
+            document.getElementById("login-btn").style.display = "block";
+          });
+        }
+    </script>
+      
+    </body>
+</html>
+
