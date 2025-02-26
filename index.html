@@ -139,26 +139,31 @@
     </style>
     
 </head>
+    
+<body class="bg-yellow-50 text-gray-800 font-roboto">
     <!-- Preloader -->
     <div id="preloader">
         <img mix-blend-mode: multiply src="https://i.imgur.com/uMMNkin.png" alt="Logo">
     </div>
-    <body class="bg-yellow-50 text-gray-800 font-roboto">
-        <nav class="bg-yellow-300 shadow-md py-4 fixed w-full top-0 z-50">
-            <ul class="flex flex-wrap justify-center space-x-4 sm:space-x-6">
-                <li><a href="#inicio" class="text-yellow-800 font-semibold hover:underline">Inicio</a></li>
-                <li><a href="#exclusividad" class="text-yellow-800 font-semibold hover:underline">Exclusividad</a></li>
-                <li><a href="#tipos" class="text-yellow-800 font-semibold hover:underline">Tipos de Miel</a></li>
-                <li><a href="#precios" class="text-yellow-800 font-semibold hover:underline">Precios</a></li>
-                <li><a href="#compra" class="text-yellow-800 font-semibold hover:underline">Cómo Comprar</a></li>
-            </ul>
-        </nav>
-    
-    <!-- Encabezado -->
-    <header id="inicio" class="text-center py-7 bg-yellow-300 shadow-xl flex justify-center items-center space-x-6 mt-9">
-        <img src="https://i.imgur.com/uMMNkin.jpeg" alt="Logo" class="w-19 max-w-[10%] rounded-full">
-        <h1 class="text-4xl font-extrabold text-yellow-800">Miel Araucana</h1>
-    </header>
+    <!--menú-->
+    <nav class="bg-yellow-300 shadow-md py-4 fixed w-full top-0 z-50">
+        <ul class="flex flex-wrap justify-center space-x-4 sm:space-x-6">
+            <li><a href="#inicio" class="text-yellow-800 font-semibold hover:underline">Inicio</a></li>
+            <li><a href="#exclusividad" class="text-yellow-800 font-semibold hover:underline">Exclusividad</a></li>
+            <li><a href="#tipos" class="text-yellow-800 font-semibold hover:underline">Tipos de Miel</a></li>
+            <li><a href="#precios" class="text-yellow-800 font-semibold hover:underline">Precios</a></li>
+            <li><a href="#compra" class="text-yellow-800 font-semibold hover:underline">Cómo Comprar</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenedor con padding-top para que no se solapen -->
+    <div class="pt-16"> <!-- Agregar padding-top suficiente para que el contenido no se solape con el menú fijo -->
+        <!-- Encabezado -->
+        <header id="inicio" class="text-center py-7 bg-yellow-300 shadow-xl flex justify-center items-center space-x-6">
+            <img src="https://i.imgur.com/uMMNkin.jpeg" alt="Logo" class="w-19 max-w-[10%] rounded-full">
+            <h1 class="text-4xl font-extrabold text-yellow-800">Miel Araucana</h1>
+        </header>
+    </div>
    
     <!-- Sección de Exclusividad en Copiapó -->
     <section id="exclusividad" class="text-center py-16 px-6 bg-yellow-100">
