@@ -6,8 +6,137 @@
     <title>Miel Araucana</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="miel.css">
-    
+    <style>
+                
+        body {
+            background-image: url('https://i.imgur.com/KtGNlUn.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            backdrop-filter: blur(10px);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Media queries para asegurar compatibilidad en móviles y PC */
+        @media (max-width: 768px) {
+            .btn-whatsapp {
+                width: 50px;
+                height: 50px;
+                right: 15px;
+                bottom: 15px;
+            }
+            .btn-whatsapp img {
+                width: 35px;
+            }
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .video-background {
+        position: relative;
+        width: 50%; /* Por defecto, 50% en PC */
+        height: 400px;
+        overflow: hidden;
+        margin: 0 auto;
+        display: block;
+        }
+
+        .video-background iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .video-background {
+                width: 100%; /* Ocupar todo el ancho en móviles */
+                height: auto;
+                aspect-ratio: 16/9; /* Mantener proporción de video */
+            }
+        }
+
+        .sabias-que {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Estilos para el preloader */
+        /* Estilos para el preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(246, 255, 163);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            
+        }
+
+        #preloader img {
+            mix-blend-mode: multiply;
+            width: 200px; /* Tamaño del logo */
+            animation: fadeOut 2s ease-out forwards; /* Dura 2 segundos */
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        /* Ajuste para PC: Logo arriba */
+        @media (min-width: 768px) {
+                    #preloader {
+                        align-items: flex-start; /* Lo mueve hacia arriba */
+                        padding-top: 250px; /* Ajusta la distancia desde arriba */
+                    }
+        }
+        /* Oculta el contenido hasta que el preloader desaparezca */
+        #content {
+            display: none;
+        }
+
+    </style>
 </head>
     
 <body id="content" class="bg-yellow-50 text-gray-800 font-roboto">
@@ -39,11 +168,6 @@
 
     
 
-    <!--2do intento con auth0-->
-    <button id="loginWithAuth0" onclick="loginWithAuth0()">Iniciar sesión con Auth0</button>
-    <button id="logoutWithAuth0" onclick="logoutWithAuth0()">Cerrar sesión</button>
-
-
 
     <!-- Sección de Exclusividad en Copiapó -->
     <section id="exclusividad" class="text-center py-16 px-6 bg-yellow-100">
@@ -65,7 +189,6 @@
                 <img src="https://i.imgur.com/8EIF4uu.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
                 <img src="https://i.imgur.com/MfEDKOz.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
                 <img src="https://i.imgur.com/83Befg3.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
-                
             </div>
             <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-yellow-50 text-black px-3 py-2 rounded-full shadow-lg">&#10094;</button>
             <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-yellow-50 text-black px-3 py-2 rounded-full shadow-lg">&#10095;</button>
@@ -185,32 +308,7 @@
             </a>
         </div>
     </section>
-    <section id="auth" class="text-center py-16 px-6 bg-yellow-100">
-        <h2 class="text-3xl font-semibold text-yellow-800 mb-6">Iniciar Sesión / Registrarse</h2>
-        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
-            <ul class="flex justify-around mb-6">
-                <li><button id="loginBtn" class="text-yellow-800 font-semibold hover:underline">Iniciar Sesión</button></li>
-                <li><button id="signupBtn" class="text-yellow-800 font-semibold hover:underline">Registrarse</button></li>
-            </ul>
-    
-            <!-- Formulario de Iniciar Sesión -->
-            <form id="loginForm" class="space-y-4">
-                <input type="email" id="loginEmail" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
-                <input type="password" id="loginPassword" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
-                <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded">Ingresar</button>
-            </form>
-    
-            <!-- Formulario de Registro (Oculto por defecto) -->
-            <form id="signupForm" class="space-y-4 hidden">
-                <input type="text" id="signupName" placeholder="Nombre Completo" class="w-full p-2 border border-gray-300 rounded">
-                <input type="email" id="signupEmail" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
-                <input type="password" id="signupPassword" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
-                <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded">Registrarse</button>
-            </form>
-        </div>
-    </section>
-    
-    
+        
     <!-- Pie de página -->
     <footer class="text-center py-6 bg-yellow-300 mt-12 shadow-inner">
         <p class="text-lg text-gray-700">&copy; 2025 Miel a Domicilio. Todos los derechos reservados.</p>
@@ -220,15 +318,48 @@
     </section>
     <a href="https://wa.me/56958608263?text=Hola.%20Estoy%20interesado!!" class="whatsapp-btn">WhatsApp</a>
     
-    <!--nuenos códigos----------------------------------------------------------------------->
     
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.22/auth0-spa-js.production.js"></script>
-    <script>
-        window.AUTH0_DOMAIN = "tu-dominio.auth0.com";
-        window.AUTH0_CLIENT_ID = "tu-client-id";
-    </script>
-    <script src="auth.js"></script>
+    <!--Script -->
 
+    <script>
+        // Función para el carrusel de imágenes
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                images[currentIndex].classList.add('hidden');
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                images[currentIndex].classList.remove('hidden');
+            });
+
+            nextBtn.addEventListener('click', () => {
+                images[currentIndex].classList.add('hidden');
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].classList.remove('hidden');
+            });
+        }
+
+
+        // Espera 3 segundos antes de ocultar el preloader y mostrar el contenido
+        setTimeout(function() {
+            document.getElementById("preloader").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        }, 3000);
+
+        document.getElementById("loginBtn").addEventListener("click", function() {
+            document.getElementById("loginForm").classList.remove("hidden");
+            document.getElementById("signupForm").classList.add("hidden");
+        });
+
+        document.getElementById("signupBtn").addEventListener("click", function() {
+            document.getElementById("signupForm").classList.remove("hidden");
+            document.getElementById("loginForm").classList.add("hidden");
+        });
+
+    </script>
+    
+    
     </body>
 </html>
 
