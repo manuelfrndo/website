@@ -6,145 +6,17 @@
     <title>Miel Araucana</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        body {
-            background-image: url('https://i.imgur.com/KtGNlUn.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            backdrop-filter: blur(10px);
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        .whatsapp-btn {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            background-color: #25D366;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Media queries para asegurar compatibilidad en móviles y PC */
-        @media (max-width: 768px) {
-            .btn-whatsapp {
-                width: 50px;
-                height: 50px;
-                right: 15px;
-                bottom: 15px;
-            }
-            .btn-whatsapp img {
-                width: 35px;
-            }
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        .video-background {
-        position: relative;
-        width: 50%; /* Por defecto, 50% en PC */
-        height: 400px;
-        overflow: hidden;
-        margin: 0 auto;
-        display: block;
-        }
-
-        .video-background iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        @media (max-width: 768px) {
-            .video-background {
-                width: 100%; /* Ocupar todo el ancho en móviles */
-                height: auto;
-                aspect-ratio: 16/9; /* Mantener proporción de video */
-            }
-        }
-
-        .sabias-que {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        /* Estilos para el preloader */
-        /* Estilos para el preloader */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgb(246, 255, 163);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            
-        }
-
-        #preloader img {
-            mix-blend-mode: multiply;
-            width: 200px; /* Tamaño del logo */
-            animation: fadeOut 2s ease-out forwards; /* Dura 3 segundos */
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-        /* Ajuste para PC: Logo arriba */
-        @media (min-width: 768px) {
-                    #preloader {
-                        align-items: flex-start; /* Lo mueve hacia arriba */
-                        padding-top: 250px; /* Ajusta la distancia desde arriba */
-                    }
-        }
-        /* Oculta el contenido hasta que el preloader desaparezca */
-        #content {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="miel.css">
     
 </head>
     
-<body class="bg-yellow-50 text-gray-800 font-roboto">
+<body id="content" class="bg-yellow-50 text-gray-800 font-roboto">
+
     <!-- Preloader -->
     <div id="preloader">
-        <img mix-blend-mode: multiply src="https://i.imgur.com/uMMNkin.png" alt="Logo">
+        <img mix-blend-mode: multiply src="assets/abejasola.png" alt="Logo">
     </div>
+
     <!--menú-->
     <nav class="bg-yellow-300 shadow-md py-4 fixed w-full top-0 z-50">
         <ul class="flex flex-wrap justify-center space-x-4 sm:space-x-6">
@@ -160,21 +32,28 @@
     <div class="pt-16"> <!-- Agregar padding-top suficiente para que el contenido no se solape con el menú fijo -->
         <!-- Encabezado -->
         <header id="inicio" class="text-center py-7 bg-yellow-300 shadow-xl flex justify-center items-center space-x-6">
-            <img src="https://i.imgur.com/uMMNkin.jpeg" alt="Logo" class="w-19 max-w-[10%] rounded-full">
+            <img src="assets/abejasola.png" alt="Logo" class="w-19 max-w-[10%] rounded-full">
             <h1 class="text-4xl font-extrabold text-yellow-800">Miel Araucana</h1>
         </header>
     </div>
-   
+
+    
+
+    <!--2do intento con auth0-->
+    <button id="loginWithAuth0" onclick="loginWithAuth0()">Iniciar sesión con Auth0</button>
+    <button id="logoutWithAuth0" onclick="logoutWithAuth0()">Cerrar sesión</button>
+
+
+
     <!-- Sección de Exclusividad en Copiapó -->
     <section id="exclusividad" class="text-center py-16 px-6 bg-yellow-100">
         <h2 class="text-3xl font-semibold text-yellow-800 mb-6">Exclusividad en Copiapó - Chile</h2>
         <p class="text-xl text-gray-700 max-w-2xl mx-auto">Nuestra <strong>Miel Araucana</strong> es un producto 100% natural originario del sur de Chile, pero con <strong>venta exclusiva en Copiapó</strong>. Garantizamos calidad y frescura en cada entrega.</p>
         <div class="mt-6">
-            <img src="https://i.imgur.com/dmyZpiP.jpeg" alt="Miel Exclusiva en Copiapó" class="w-80 h-auto mx-auto rounded-lg shadow-lg">
+            <img src="assets/abejaflores.png" alt="Miel Exclusiva en Copiapó" class="w-80 h-auto mx-auto rounded-lg shadow-lg">
         </div>
     </section>
 
-    
     <!-- Sección de Presentación -->
     <section class="text-center py-16 px-6">
         <h2 class="text-3xl font-semibold text-yellow-800 bg-white p-4 rounded-lg shadow-lg inline-block">
@@ -182,9 +61,10 @@
         </h2>
         <div class="relative w-full max-w-2xl mx-auto mt-6">
             <div id="carousel" class="flex overflow-hidden rounded-lg shadow-xl">
-                <img src="https://i.imgur.com/dmyZpiP.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500">
-                <img src="https://i.imgur.com/qzGydFw.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
-                <img src="https://i.imgur.com/Xf2Ekfv.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
+                <img src="assets/miel1.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500">
+                <img src="assets/miel2.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
+                <img src="assets/miel4.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
+                <img src="assets/miel3.jpeg" alt="Frasco de miel" class="w-full h-auto transition-transform duration-500 hidden">
                 
             </div>
             <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-yellow-50 text-black px-3 py-2 rounded-full shadow-lg">&#10094;</button>
@@ -198,13 +78,13 @@
         <div class="flex justify-center space-x-12">
             <!-- Miel Cristalizada -->
             <div class="bg-white p-6 rounded-lg shadow-lg w-80">
-                <img src="https://i.imgur.com/qzGydFw.jpeg" alt="Miel Cristalizada" class="w-full h-48 object-cover rounded-lg mb-4">
+                <img src="assets/miel5.jpeg" alt="Miel Cristalizada" class="w-full h-48 object-cover rounded-lg mb-4">
                 <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Miel Cristalizada</h3>
                 <p class="text-gray-700">La miel cristalizada es un proceso natural en el que la miel se convierte en sólido o semi-sólido, manteniendo todas sus propiedades.</p>
             </div>
             <!-- Miel Sin Cristalizar -->
             <div class="bg-white p-6 rounded-lg shadow-lg w-80">
-                <img src="https://i.imgur.com/pyri2tw.jpeg" alt="Miel Sin Cristalizar" class="w-full h-48 object-cover rounded-lg mb-4">
+                <img src="assets/miel3.jpeg" alt="Miel Sin Cristalizar" class="w-full h-48 object-cover rounded-lg mb-4">
                 <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Miel Sin Cristalizar</h3>
                 <p class="text-gray-700">La miel sin cristalizar mantiene su consistencia líquida y fluida, ideal para usar en té o como edulcorante natural.</p>
             </div>
@@ -226,11 +106,6 @@
         </div>
     </section>
 
-    <script>
-        function scrollToCompra() {
-            document.getElementById('compra').scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
 
     <!-- Sección de Video como fondo "¿Sabías qué?" -->
     <section class="video-background py-16 px-6 bg-yellow-50">
@@ -317,35 +192,25 @@
                 <li><button id="loginBtn" class="text-yellow-800 font-semibold hover:underline">Iniciar Sesión</button></li>
                 <li><button id="signupBtn" class="text-yellow-800 font-semibold hover:underline">Registrarse</button></li>
             </ul>
-            
+    
             <!-- Formulario de Iniciar Sesión -->
             <form id="loginForm" class="space-y-4">
-                <input type="email" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
-                <input type="password" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
+                <input type="email" id="loginEmail" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
+                <input type="password" id="loginPassword" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
                 <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded">Ingresar</button>
             </form>
-            
+    
             <!-- Formulario de Registro (Oculto por defecto) -->
             <form id="signupForm" class="space-y-4 hidden">
-                <input type="text" placeholder="Nombre Completo" class="w-full p-2 border border-gray-300 rounded">
-                <input type="email" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
-                <input type="password" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
+                <input type="text" id="signupName" placeholder="Nombre Completo" class="w-full p-2 border border-gray-300 rounded">
+                <input type="email" id="signupEmail" placeholder="Correo Electrónico" class="w-full p-2 border border-gray-300 rounded">
+                <input type="password" id="signupPassword" placeholder="Contraseña" class="w-full p-2 border border-gray-300 rounded">
                 <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded">Registrarse</button>
             </form>
         </div>
     </section>
     
-    <script>
-        document.getElementById("loginBtn").addEventListener("click", function() {
-            document.getElementById("loginForm").classList.remove("hidden");
-            document.getElementById("signupForm").classList.add("hidden");
-        });
-        
-        document.getElementById("signupBtn").addEventListener("click", function() {
-            document.getElementById("signupForm").classList.remove("hidden");
-            document.getElementById("loginForm").classList.add("hidden");
-        });
-    </script>
+    
     <!-- Pie de página -->
     <footer class="text-center py-6 bg-yellow-300 mt-12 shadow-inner">
         <p class="text-lg text-gray-700">&copy; 2025 Miel a Domicilio. Todos los derechos reservados.</p>
@@ -355,92 +220,17 @@
     </section>
     <a href="https://wa.me/56958608263?text=Hola.%20Estoy%20interesado!!" class="whatsapp-btn">WhatsApp</a>
     
-    <script>
-        // Función para el carrusel de imágenes
-        const images = document.querySelectorAll('#carousel img');
-        let currentIndex = 0;
+    <!--nuenos códigos----------------------------------------------------------------------->
+    
 
-        document.getElementById('next').addEventListener('click', () => {
-            images[currentIndex].classList.add('hidden');
-            currentIndex = (currentIndex + 1) % images.length;
-            images[currentIndex].classList.remove('hidden');
-        });
+    <!--Script -->
 
-        document.getElementById('prev').addEventListener('click', () => {
-            images[currentIndex].classList.add('hidden');
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            images[currentIndex].classList.remove('hidden');
-        });
-    </script>
     <script>
-        // Espera 3 segundos antes de ocultar el preloader y mostrar el contenido
-        setTimeout(function() {
-            document.getElementById("preloader").style.display = "none";
-            document.getElementById("content").style.display = "block";
-        }, 2000);
+        window.AUTH0_DOMAIN = "tu-dominio.auth0.com";
+        window.AUTH0_CLIENT_ID = "tu-client-id";
     </script>
-    <!-- Botones para autenticación -->
-    <button id="login">Iniciar sesión con Google</button>
-    <button id="logout" style="display:none;">Cerrar sesión</button>
-    <p id="user-info"></p>
-    
-    <!-- Scripts de Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-    
-    <script>
-      // Configuración de Firebase
-      const firebaseConfig = {
-        apiKey: "TU_API_KEY",
-        authDomain: "TU_AUTH_DOMAIN",
-        projectId: "TU_PROJECT_ID",
-        storageBucket: "TU_STORAGE_BUCKET",
-        messagingSenderId: "TU_MESSAGING_SENDER_ID",
-        appId: "TU_APP_ID"
-      };
-    
-      // Inicializar Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const provider = new firebase.auth.GoogleAuthProvider();
-    
-      // Iniciar sesión con Google
-      document.getElementById("login").addEventListener("click", function () {
-        auth.signInWithPopup(provider)
-          .then((result) => {
-            console.log("Usuario autenticado:", result.user);
-            document.getElementById("user-info").innerText = "Bienvenido, " + result.user.displayName;
-            document.getElementById("login").style.display = "none";
-            document.getElementById("logout").style.display = "block";
-          })
-          .catch((error) => {
-            console.error("Error de autenticación:", error);
-          });
-      });
-    
-      // Cerrar sesión
-      document.getElementById("logout").addEventListener("click", function () {
-        auth.signOut().then(() => {
-          document.getElementById("user-info").innerText = "";
-          document.getElementById("login").style.display = "block";
-          document.getElementById("logout").style.display = "none";
-        });
-      });
-    
-      // Detectar estado de autenticación
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          document.getElementById("user-info").innerText = "Bienvenido, " + user.displayName;
-          document.getElementById("login").style.display = "none";
-          document.getElementById("logout").style.display = "block";
-        } else {
-          document.getElementById("user-info").innerText = "";
-          document.getElementById("login").style.display = "block";
-          document.getElementById("logout").style.display = "none";
-        }
-      });
-    </script>
-
+    <script src="auth.js"></script>
+    <script src="miel.js"></script>
     </body>
 </html>
 

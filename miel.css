@@ -1,0 +1,128 @@
+
+body {
+    background-image: url('https://i.imgur.com/KtGNlUn.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    backdrop-filter: blur(10px);
+}
+html {
+    scroll-behavior: smooth;
+}
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.btn:hover {
+    background-color: #0056b3;
+}
+.whatsapp-btn {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Media queries para asegurar compatibilidad en móviles y PC */
+@media (max-width: 768px) {
+    .btn-whatsapp {
+        width: 50px;
+        height: 50px;
+        right: 15px;
+        bottom: 15px;
+    }
+    .btn-whatsapp img {
+        width: 35px;
+    }
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+.video-background {
+position: relative;
+width: 50%; /* Por defecto, 50% en PC */
+height: 400px;
+overflow: hidden;
+margin: 0 auto;
+display: block;
+}
+
+.video-background iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .video-background {
+        width: 100%; /* Ocupar todo el ancho en móviles */
+        height: auto;
+        aspect-ratio: 16/9; /* Mantener proporción de video */
+    }
+}
+
+.sabias-que {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Estilos para el preloader */
+/* Estilos para el preloader */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(246, 255, 163);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    
+}
+
+#preloader img {
+    mix-blend-mode: multiply;
+    width: 200px; /* Tamaño del logo */
+    animation: fadeOut 2s ease-out forwards; /* Dura 2 segundos */
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+/* Ajuste para PC: Logo arriba */
+@media (min-width: 768px) {
+            #preloader {
+                align-items: flex-start; /* Lo mueve hacia arriba */
+                padding-top: 250px; /* Ajusta la distancia desde arriba */
+            }
+}
+/* Oculta el contenido hasta que el preloader desaparezca */
+#content {
+    display: none;
+}
