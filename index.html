@@ -32,7 +32,7 @@
         }
         .whatsapp-btn {
             position: fixed;
-            bottom: 80px;
+            bottom: 20px; /* Lo bajamos un poco más */
             right: 20px;
             background-color: #25D366;
             color: white;
@@ -41,20 +41,29 @@
             text-decoration: none;
             font-size: 20px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000; /* Asegura que esté por encima de otros elementos */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease-in-out;
         }
-
-        /* Media queries para asegurar compatibilidad en móviles y PC */
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Ajuste para móviles */
         @media (max-width: 768px) {
-            .btn-whatsapp {
-                width: 50px;
-                height: 50px;
+            .whatsapp-btn {
+                width: 60px;
+                height: 60px;
                 right: 15px;
                 bottom: 15px;
-            }
-            .btn-whatsapp img {
-                width: 35px;
+                padding: 10px;
+                font-size: 16px;
             }
         }
+
         img {
             max-width: 100%;
             height: auto;
