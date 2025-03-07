@@ -277,24 +277,40 @@
     <!--Script -->
 
     <script>
-        // Función para el carrusel de imágenes
-        const prevBtn = document.getElementById('prev');
-        const nextBtn = document.getElementById('next');
-
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', () => {
-                images[currentIndex].classList.add('hidden');
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                images[currentIndex].classList.remove('hidden');
-            });
-
-            nextBtn.addEventListener('click', () => {
-                images[currentIndex].classList.add('hidden');
-                currentIndex = (currentIndex + 1) % images.length;
-                images[currentIndex].classList.remove('hidden');
+        // Selecciona todas las imágenes dentro del carrusel
+        const images = document.querySelectorAll("#carousel img");
+        let currentIndex = 0;
+    
+        // Selecciona los botones
+        const prevBtn = document.getElementById("prev");
+        const nextBtn = document.getElementById("next");
+    
+        // Función para cambiar las imágenes
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.add("hidden"); // Oculta todas las imágenes
+                if (i === index) {
+                    img.classList.remove("hidden"); // Muestra solo la actual
+                }
             });
         }
-    </script> 
+    
+        // Listeners para los botones
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                showImage(currentIndex);
+            });
+    
+            nextBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex + 1) % images.length;
+                showImage(currentIndex);
+            });
+        }
+    
+        // Muestra la primera imagen al cargar la página
+        showImage(currentIndex);
+    </script>
 
     </body>
 </html>
