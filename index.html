@@ -33,7 +33,7 @@
         }
         .whatsapp-btn {
           position: fixed;
-          bottom: 20px;
+          bottom: 60px;
           right: 20px;
           background-color: #25D366;
           color: white;
@@ -171,7 +171,8 @@
         
         /* Botón de envío */
         .contact-form button {
-          display: inline-block;
+          display: block;          /* Cambiamos de inline-block a block */
+          margin: 1rem auto 0;     /* Márgenes: 1rem arriba, auto a los lados, 0 abajo */
           padding: 0.75rem 1.5rem;
           background-color: #007bff; /* Color principal */
           color: #fff;
@@ -181,6 +182,7 @@
           font-size: 1rem;
           transition: background-color 0.3s ease;
         }
+
         
         /* Hover del botón */
         .contact-form button:hover {
