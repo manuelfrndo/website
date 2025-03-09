@@ -105,6 +105,49 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        form[name="contact"] {
+          max-width: 400px;
+          margin: 20px auto;
+          padding: 20px;
+          background-color: #f4f4f4;
+          border-radius: 5px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        form[name="contact"] p {
+          margin-bottom: 15px;
+        }
+        
+        form[name="contact"] label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        
+        form[name="contact"] input[type="text"],
+        form[name="contact"] input[type="email"] {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          font-size: 16px;
+        }
+        
+        form[name="contact"] button[type="submit"] {
+          padding: 10px 15px;
+          background-color: #007BFF;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        
+        form[name="contact"] button[type="submit"]:hover {
+          background-color: #0056b3;
+        }
+
     </style>
 </head>
 
@@ -272,17 +315,19 @@
             </a>
         </div>
     </section>
-    <form name="contact" netlify>
-      <p>
-        <label>Name <input type="text" name="name" /></label>
-      </p>
-      <p>
-        <label>Email <input type="email" name="email" /></label>
-      </p>
-      <p>
-        <button type="submit">Send</button>
-      </p>
+    <form autocomplete="off" netlify>
+      <label>Nombre</label>
+      <input type="text" name="name" placeholder="Escribe tu nombre" />
+    
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Escribe tu email" />
+    
+      <label>Mensaje</label>
+      <textarea placeholder="Escribe tu mensaje" name="message"></textarea>
+    
+      <input type="submit" value="Enviar" />
     </form>
+
         
     <!-- Pie de página -->
     <footer class="text-center py-6 bg-yellow-300 mt-12 shadow-inner">
