@@ -105,48 +105,76 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        form[name="contact"] {
-          max-width: 400px;
-          margin: 20px auto;
-          padding: 20px;
-          background-color: #f4f4f4;
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* Sección contenedora (opcional para fondo o maquetación) */
+        .contact-section {
+          background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+          padding: 2rem;
+          text-align: center;
+          color: #fff; /* Color de texto para el título */
+          font-family: Arial, sans-serif; /* Ajusta la tipografía a tu gusto */
         }
         
-        form[name="contact"] p {
-          margin-bottom: 15px;
+        /* Título de la sección */
+        .contact-section h2 {
+          margin-bottom: 1rem;
+          font-size: 2rem;
         }
         
-        form[name="contact"] label {
+        /* Formulario principal */
+        .contact-form {
+          max-width: 600px;
+          margin: 0 auto; /* Centra el formulario */
+          background-color: #fff;
+          border-radius: 8px;
+          padding: 2rem;
+          text-align: left; /* Alineación interna de los campos */
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Agrupaciones de cada campo */
+        .contact-form .form-group {
+          margin-bottom: 1rem;
+        }
+        
+        /* Etiquetas */
+        .contact-form label {
           display: block;
+          margin-bottom: 0.5rem;
           font-weight: bold;
-          margin-bottom: 5px;
+          color: #333; 
         }
         
-        form[name="contact"] input[type="text"],
-        form[name="contact"] input[type="email"] {
+        /* Campos de texto y área de texto */
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
           width: 100%;
-          padding: 8px;
+          padding: 0.75rem;
           border: 1px solid #ccc;
-          border-radius: 3px;
-          font-size: 16px;
+          border-radius: 4px;
+          font-size: 1rem;
+          font-family: inherit; /* Mantiene la misma fuente */
+          box-sizing: border-box; /* Evita desbordamientos */
         }
         
-        form[name="contact"] button[type="submit"] {
-          padding: 10px 15px;
-          background-color: #007BFF;
+        /* Botón de envío */
+        .contact-form button {
+          display: inline-block;
+          padding: 0.75rem 1.5rem;
+          background-color: #007bff; /* Color principal */
           color: #fff;
           border: none;
-          border-radius: 3px;
-          font-size: 16px;
+          border-radius: 4px;
           cursor: pointer;
+          font-size: 1rem;
           transition: background-color 0.3s ease;
         }
         
-        form[name="contact"] button[type="submit"]:hover {
-          background-color: #0056b3;
+        /* Hover del botón */
+        .contact-form button:hover {
+          background-color: #0056b3; /* Color al pasar el cursor */
         }
+        
 
     </style>
 </head>
@@ -315,18 +343,27 @@
             </a>
         </div>
     </section>
-    <form autocomplete="off" netlify>
-      <label>Nombre</label>
-      <input type="text" name="name" placeholder="Escribe tu nombre" />
-    
-      <label>Email</label>
-      <input type="email" name="email" placeholder="Escribe tu email" />
-    
-      <label>Mensaje</label>
-      <textarea placeholder="Escribe tu mensaje" name="message"></textarea>
-    
-      <input type="submit" value="Enviar" />
-    </form>
+
+
+    <section class="contact-section">
+      <h2>Contáctanos</h2>
+      <form class="contact-form" name="contact" netlify>
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" placeholder="Escribe tu nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Escribe tu email" required />
+        </div>
+        <div class="form-group">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+        </div>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
 
         
     <!-- Pie de página -->
