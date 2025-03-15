@@ -1,0 +1,43 @@
+}
+        .whatsapp-btn {
+          position: fixed;
+          bottom: 60px;
+          right: 20px;
+          background-color: #25D366;
+          color: white;
+          padding: 15px 20px;
+          border-radius: 50px;
+          text-decoration: none;
+          font-size: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          z-index: 1000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Hover para escritorio */
+        .whatsapp-btn:hover {
+          transform: scale(1.1);
+        }
+        
+        /* Ajuste para móviles */
+        @media (max-width: 768px) {
+          .whatsapp-btn {
+            /* Quitar ancho y alto fijos */
+            width: auto;
+            height: auto;
+            
+            /* Ajustar padding y fuente para que quepa el texto */
+            padding: 10px 15px;
+            font-size: 16px;
+        
+            /* Mantener el radio de borde para la forma de píldora */
+            border-radius: 50px;
+        
+            /* Ajustar la posición */
+            right: 15px;
+            bottom: 55px;
+          }
+        }
