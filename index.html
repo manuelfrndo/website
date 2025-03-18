@@ -219,6 +219,9 @@
             <h1 class="text-4xl font-extrabold text-yellow-800">Miel Araucana</h1>
         </header>
     </div>
+    <button id="btn-login" onclick="login()">Iniciar sesión</button>
+    <button id="btn-logout" onclick="logout()" style="display:none;">Cerrar sesión</button>
+    <div id="user-profile"></div>
 
     
 
@@ -388,10 +391,8 @@
     </section>
     
     <!-- Botón de WhatsApp flotante -->
-    </section>
     <a href="https://wa.me/56958608263?text=Hola.%20Estoy%20interesado!!" class="whatsapp-btn"></a>
-    
-        
+            
     <!-- Pie de página -->
     <footer class="text-center py-6 bg-yellow-300 mt-12 shadow-inner">
         <p class="text-lg text-gray-700">&copy; 2025 Miel a Domicilio. Todos los derechos reservados.</p>
@@ -431,6 +432,90 @@
     
         // Muestra la primera imagen al cargar la página
         showImage(currentIndex);
+    </script>
+
+    <script>
+        // Asegurar que createAuth0Client está disponible
+        if (typeof createAuth0Client !== "function") {
+            console.error("Error: Auth0 SDK no está cargado. Asegúrate de incluir el script de Auth0 en tu HTML.");
+        }
+        
+        // Inicializa la variable del cliente Auth0
+        let auth0Client = null;
+        
+        // Cargar Auth0 con manejo de errores
+        const initAuth0 = async () => {
+            try {
+                auth0Client = await createAuth0Client({
+                    domain: "dev-4lf4olgdangyafnp.us.auth0.com",
+                    client_id: "Uvgewydr9h4QaWUAlCjZTsOQ6GCAor0n",
+                    cacheLocation: "localstorage",
+                    useRefreshTokens: true
+                });
+        
+                await updateUI();
+            } catch (error) {
+                console.error("Error al inicializar Auth0:", error);
+            }
+        };
+        
+        // Actualizar la interfaz de usuario (UI)
+        const updateUI = async () => {
+            try {
+                const isAuthenticated = await auth0Client.isAuthenticated();
+        
+                // Verificar que los botones existan antes de acceder a ellos
+                const btnLogin = document.getElementById("btn-login");
+                const btnLogout = document.getElementById("btn-logout");
+                const userProfile = document.getElementById("user-profile");
+        
+                if (btnLogin && btnLogout) {
+                    btnLogin.style.display = isAuthenticated ? "none" : "block";
+                    btnLogout.style.display = isAuthenticated ? "block" : "none";
+                }
+        
+                if (isAuthenticated && userProfile) {
+                    const user = await auth0Client.getUser();
+                    userProfile.innerHTML = `Bienvenido ${user.name}`;
+                }
+            } catch (error) {
+                console.error("Error al actualizar la UI:", error);
+            }
+        };
+        
+        // Función para iniciar sesión con manejo de errores
+        const login = async () => {
+            try {
+                await auth0Client.loginWithRedirect({ redirect_uri: window.location.origin });
+            } catch (error) {
+                console.error("Error al iniciar sesión:", error);
+            }
+        };
+        
+        // Función para cerrar sesión con manejo de errores
+        const logout = () => {
+            try {
+                auth0Client.logout({ returnTo: window.location.origin });
+            } catch (error) {
+                console.error("Error al cerrar sesión:", error);
+            }
+        };
+        
+        // Manejar la redirección después del login
+        window.onload = async () => {
+            try {
+                await initAuth0();
+        
+                const query = window.location.search;
+                if (query.includes("code=") && query.includes("state=")) {
+                    await auth0Client.handleRedirectCallback();
+                    window.history.replaceState({}, document.title, "/");
+                    await updateUI();
+                }
+            } catch (error) {
+                console.error("Error en la redirección después del login:", error);
+            }
+        };
     </script>
 
     </body>
