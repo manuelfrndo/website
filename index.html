@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+    
 
     <style>
                 
@@ -219,8 +220,24 @@
             <h1 class="text-4xl font-extrabold text-yellow-800">Miel Araucana</h1>
         </header>
     </div>
-    <button id="btn-login" onclick="login()">Iniciar sesión</button>
-    <button id="btn-logout" onclick="logout()" style="display:none;">Cerrar sesión</button>
+
+    <button 
+      id="btn-login" 
+      onclick="login()" 
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+    >
+      Iniciar sesión
+    </button>
+    
+    <button 
+      id="btn-logout" 
+      onclick="logout()" 
+      class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300" 
+      style="display:none;"
+    >
+      Cerrar sesión
+    </button>
+
     <div id="user-profile"></div>
 
     
@@ -435,88 +452,99 @@
     </script>
 
     <script>
-        // Asegurar que createAuth0Client está disponible
-        if (typeof createAuth0Client !== "function") {
+          // Asegurar que createAuth0Client está disponible
+          if (typeof createAuth0Client !== "function") {
             console.error("Error: Auth0 SDK no está cargado. Asegúrate de incluir el script de Auth0 en tu HTML.");
-        }
+          }
         
-        // Inicializa la variable del cliente Auth0
-        let auth0Client = null;
+          // Inicializa la variable del cliente Auth0
+          let auth0Client = null;
         
-        // Cargar Auth0 con manejo de errores
-        const initAuth0 = async () => {
+          // Cargar Auth0 con manejo de errores
+          const initAuth0 = async () => {
             try {
-                auth0Client = await createAuth0Client({
-                    domain: "dev-4lf4olgdangyafnp.us.auth0.com",
-                    client_id: "Uvgewydr9h4QaWUAlCjZTsOQ6GCAor0n",
-                    cacheLocation: "localstorage",
-                    useRefreshTokens: true
-                });
+              auth0Client = await createAuth0Client({
+                domain: "dev-4lf4olgdangyafnp.us.auth0.com",
+                client_id: "Uvgewydr9h4QaWUAlCjZTsOQ6GCAor0n",
+                cacheLocation: "localstorage",
+                useRefreshTokens: true
+              });
         
+              // Una vez inicializado Auth0, actualizamos la UI
+              await updateUI();
+            } catch (error) {
+              console.error("Error al inicializar Auth0:", error);
+            }
+          };
+        
+          // Actualizar la interfaz de usuario (UI)
+          const updateUI = async () => {
+            try {
+              const isAuthenticated = await auth0Client.isAuthenticated();
+        
+              // Verificamos que los botones y el contenedor de perfil existan
+              const btnLogin = document.getElementById("btn-login");
+              const btnLogout = document.getElementById("btn-logout");
+              const userProfile = document.getElementById("user-profile");
+        
+              if (btnLogin && btnLogout) {
+                // Mostrar u ocultar los botones según el estado de autenticación
+                btnLogin.style.display = isAuthenticated ? "none" : "block";
+                btnLogout.style.display = isAuthenticated ? "block" : "none";
+              }
+        
+              if (isAuthenticated && userProfile) {
+                // Si el usuario está autenticado, obtenemos su información
+                const user = await auth0Client.getUser();
+                userProfile.innerHTML = `Bienvenido ${user.name}`;
+              }
+            } catch (error) {
+              console.error("Error al actualizar la UI:", error);
+            }
+          };
+        
+          // Función para iniciar sesión
+          const login = async () => {
+            try {
+              await auth0Client.loginWithRedirect({
+                redirect_uri: window.location.origin
+              });
+            } catch (error) {
+              console.error("Error al iniciar sesión:", error);
+            }
+          };
+        
+          // Función para cerrar sesión
+          const logout = () => {
+            try {
+              auth0Client.logout({
+                returnTo: window.location.origin
+              });
+            } catch (error) {
+              console.error("Error al cerrar sesión:", error);
+            }
+          };
+        
+          // Manejar la redirección después del login
+          window.onload = async () => {
+            try {
+              // Inicializamos Auth0
+              await initAuth0();
+        
+              // Si la URL contiene parámetros de autenticación (code, state),
+              // los manejamos y luego limpiamos la URL
+              const query = window.location.search;
+              if (query.includes("code=") && query.includes("state=")) {
+                await auth0Client.handleRedirectCallback();
+                window.history.replaceState({}, document.title, "/");
                 await updateUI();
+              }
             } catch (error) {
-                console.error("Error al inicializar Auth0:", error);
+              console.error("Error en la redirección después del login:", error);
             }
-        };
-        
-        // Actualizar la interfaz de usuario (UI)
-        const updateUI = async () => {
-            try {
-                const isAuthenticated = await auth0Client.isAuthenticated();
-        
-                // Verificar que los botones existan antes de acceder a ellos
-                const btnLogin = document.getElementById("btn-login");
-                const btnLogout = document.getElementById("btn-logout");
-                const userProfile = document.getElementById("user-profile");
-        
-                if (btnLogin && btnLogout) {
-                    btnLogin.style.display = isAuthenticated ? "none" : "block";
-                    btnLogout.style.display = isAuthenticated ? "block" : "none";
-                }
-        
-                if (isAuthenticated && userProfile) {
-                    const user = await auth0Client.getUser();
-                    userProfile.innerHTML = `Bienvenido ${user.name}`;
-                }
-            } catch (error) {
-                console.error("Error al actualizar la UI:", error);
-            }
-        };
-        
-        // Función para iniciar sesión con manejo de errores
-        const login = async () => {
-            try {
-                await auth0Client.loginWithRedirect({ redirect_uri: window.location.origin });
-            } catch (error) {
-                console.error("Error al iniciar sesión:", error);
-            }
-        };
-        
-        // Función para cerrar sesión con manejo de errores
-        const logout = () => {
-            try {
-                auth0Client.logout({ returnTo: window.location.origin });
-            } catch (error) {
-                console.error("Error al cerrar sesión:", error);
-            }
-        };
-        
-        // Manejar la redirección después del login
-        window.onload = async () => {
-            try {
-                await initAuth0();
-        
-                const query = window.location.search;
-                if (query.includes("code=") && query.includes("state=")) {
-                    await auth0Client.handleRedirectCallback();
-                    window.history.replaceState({}, document.title, "/");
-                    await updateUI();
-                }
-            } catch (error) {
-                console.error("Error en la redirección después del login:", error);
-            }
-        };
-    </script>
+          };
+        </script>
+
 
     </body>
 </html>
