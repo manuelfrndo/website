@@ -102,13 +102,19 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-        }
-
+        }        
+        /* Ajustes para dispositivos móviles */
         @media (max-width: 768px) {
             .video-background {
-                width: 100%; /* Ocupar todo el ancho en móviles */
+                width: 100%; /* El video toca los bordes laterales */
                 height: auto;
-                aspect-ratio: 16/9; /* Mantener proporción de video */
+                aspect-ratio: 16/9; /* Mantiene la proporción del video */
+            }
+            .sabias-que {
+                width: calc(100% - 40px); /* Deja 20px de margen a cada lado */
+                max-height: calc(100% - 40px); /* Asegura que el recuadro tenga 20px de margen superior e inferior */
+                padding: 15px; /* Se reduce un poco el padding para que el recuadro no sea tan alto */
+                overflow-y: auto; /* En caso de que el contenido sea muy alto */
             }
         }
 
