@@ -11,24 +11,28 @@
 
     <style>
                 
-        /* Fondo por defecto (PC) */
+        /* Fondo para PC (pantallas grandes) */
         body {
-            background-image: url('https://i.imgur.com/Jb9obx0.png'); /*  Imagen para PC */
-            background-size: cover;
-            background-position: center;
+            background-image: url('https://i.imgur.com/Jb9obx0.png');
+            background-repeat: no-repeat;
+            background-position: center top;
             background-attachment: fixed;
+            background-size: auto; /* La imagen no se escala */
             backdrop-filter: blur(10px);
         }
         
         /* Fondo para móviles */
         @media (max-width: 768px) {
             body {
-                background-image: url('https://i.imgur.com/53DAenT.png'); /* Imagen para móvil */
-                background-attachment: scroll; /* O puedes dejarlo en fixed si lo deseas */
-                backdrop-filter: blur(8px); /* Menos blur en móviles si prefieres */
+                background-image: url('https://i.imgur.com/53DAenT.png');
+                background-repeat: no-repeat;
+                background-position: center top;
+                background-attachment: fixed;
+                background-size: auto;
+                backdrop-filter: blur(6px);
             }
         }
-        
+                
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px; /* Ajusta según la altura de tu menú fijo */
