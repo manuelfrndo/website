@@ -11,13 +11,24 @@
 
     <style>
                 
+        /* Fondo por defecto (PC) */
         body {
-            background-image: url('https://i.imgur.com/KtGNlUn.jpeg');
+            background-image: url('https://i.imgur.com/Jb9obx0.png'); /*  Imagen para PC */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             backdrop-filter: blur(10px);
         }
+        
+        /* Fondo para móviles */
+        @media (max-width: 768px) {
+            body {
+                background-image: url('https://i.imgur.com/53DAenT.png'); /* Imagen para móvil */
+                background-attachment: scroll; /* O puedes dejarlo en fixed si lo deseas */
+                backdrop-filter: blur(8px); /* Menos blur en móviles si prefieres */
+            }
+        }
+        
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px; /* Ajusta según la altura de tu menú fijo */
