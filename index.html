@@ -207,7 +207,7 @@
 
 <body class="bg-yellow-50 text-gray-800 font-roboto" id="content">
 
-    <!--menú-->
+    <!--menú
     <nav class="bg-yellow-300 shadow-md py-4 fixed w-full top-0 z-50">
         <ul class="flex flex-wrap justify-center space-x-4 sm:space-x-6">
             <li><a href="#inicio" class="text-yellow-800 font-semibold hover:underline">Inicio</a></li>
@@ -216,6 +216,44 @@
             <li><a href="#precios" class="text-yellow-800 font-semibold hover:underline">Precios</a></li>
             <li><a href="#compra" class="text-yellow-800 font-semibold hover:underline">Cómo Comprar</a></li>
         </ul>
+    </nav>-->
+    <nav class="bg-yellow-300 shadow-md py-4 fixed w-full top-0 z-50">
+      <ul class="flex flex-wrap justify-center items-center space-x-4 sm:space-x-6">
+        <li>
+          <a href="#inicio" class="text-yellow-800 font-semibold hover:underline">
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a href="#exclusividad" class="text-yellow-800 font-semibold hover:underline">
+            Exclusividad
+          </a>
+        </li>
+        <li>
+          <a href="#tipos" class="text-yellow-800 font-semibold hover:underline">
+            Tipos de Miel
+          </a>
+        </li>
+        <li>
+          <a href="#precios" class="text-yellow-800 font-semibold hover:underline">
+            Precios
+          </a>
+        </li>
+        <li>
+          <a href="#compra" class="text-yellow-800 font-semibold hover:underline">
+            Cómo Comprar
+          </a>
+        </li>
+        <!-- Botón especial Encargar pedido -->
+        <li>
+          <a
+            href="#encargar"
+            class="bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full hover:bg-yellow-700 transition-colors"
+          >
+            Encargar pedido
+          </a>
+        </li>
+      </ul>
     </nav>
 
     <!-- Contenedor con padding-top para que no se solapen -->
@@ -390,7 +428,7 @@
     </section>
 
     <!--formulario-->
-    <section class="contact-section">
+    <section id="encargar" class="contact-section">
       <h2 class="text-3xl font-semibold text-yellow-800 mb-6">Encarga tu pedido ✔</h2>
       <form class="contact-form" name="contact" netlify>
         <div class="form-group">
